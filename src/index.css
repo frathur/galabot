@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-green: #2E7D32;
+  --color-brand-green-light: #4CAF50;
+  --color-brand-brown: #5D4037;
+  --color-brand-light: #F1F8E9;
+  --color-brand-white: #FFFFFF;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-light text-gray-900 font-sans antialiased m-0 p-0;
+  }
+}
