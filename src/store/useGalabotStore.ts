@@ -73,12 +73,13 @@ export const useGalabotStore = create<GalabotState>((set) => {
       set({ isInitializing: true });
 
       // 1. Establish Firebase Listener
-      const dbRef = ref(rtdb as any, 'biobot');
-      onValue(dbRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          set((state) => {
-            let lat = state.location.lat;
+      if (rtdb) {
+        const dbRef = ref(rtdb as any, 'biobot');
+        onValue(dbRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            set((state) => {
+              let lat = state.location.lat;
             let lng = state.location.lng;
             if (typeof data.lat === 'number' && typeof data.lng === 'number') {
                lat = data.lat; lng = data.lng;
@@ -99,11 +100,15 @@ export const useGalabotStore = create<GalabotState>((set) => {
               lastUpdated: data.lastUpdated ?? Date.now(),
               isInitializing: false
             };
-          });
-        } else {
-          set({ isInitializing: false });
-        }
-      });
+            });
+          } else {
+            set({ isInitializing: false });
+          }
+        });
+      } else {
+        console.warn('Firebase RTDB not initialized. Running solely on local simulation physics.');
+        set({ isInitializing: false });
+      }
 
       // 2. Local Hardware Physics Simulation (Fills gaps natively if sensors are missing from RTDB)
       setInterval(() => {
