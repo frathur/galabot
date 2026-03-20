@@ -81,10 +81,14 @@ export const useGalabotStore = create<GalabotState>((set) => {
             set((state) => {
               let lat = state.location.lat;
             let lng = state.location.lng;
-            if (typeof data.lat === 'number' && typeof data.lng === 'number') {
-               lat = data.lat; lng = data.lng;
-            } else if (typeof data.location === 'object') {
-               lat = data.location.lat; lng = data.location.lng;
+            
+            // Permissively cast to Number to support ESP32 sending metrics as strings
+            if (data.lat !== undefined && data.lng !== undefined) {
+               lat = Number(data.lat) || lat; 
+               lng = Number(data.lng) || lng;
+            } else if (data.location && data.location.lat !== undefined && data.location.lng !== undefined) {
+               lat = Number(data.location.lat) || lat; 
+               lng = Number(data.location.lng) || lng;
             }
 
             return {
