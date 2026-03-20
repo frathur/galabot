@@ -63,9 +63,10 @@ export default function Layout() {
           
           <div className="flex items-center gap-6">
              {/* Live Clock Component */}
-             <div className="hidden md:flex items-center gap-2 bg-gray-50 border border-gray-200 px-4 py-1.5 rounded-full text-sm font-bold text-gray-500 shadow-inner">
-               <Clock className="w-4 h-4 text-brand-green" />
-               {format(time, 'MMM dd, yyyy \u2014 HH:mm:ss')}
+             <div className="hidden md:flex items-center gap-1.5 lg:gap-2 bg-gray-50 border border-gray-200 px-3 lg:px-4 py-1.5 rounded-full text-xs lg:text-sm font-bold text-gray-500 shadow-inner whitespace-nowrap">
+               <Clock className="w-4 h-4 text-brand-green shrink-0" />
+               <span className="hidden lg:inline">{format(time, 'MMM dd, yyyy \u2014 ')}</span>
+               <span>{format(time, 'HH:mm:ss')}</span>
              </div>
              
              {/* Notification Bell */}
